@@ -16,8 +16,8 @@ mutable struct ThreadSafeDict{K, V} <: AbstractDict{K, V}
     dlock::Threads.SpinLock
     enabled::Bool
     d::Dict
-    ThreadSafeDict{K, V}() where V where K = new(Threads.SpinLock(), Dict{K, V}())
-    ThreadSafeDict{K, V}(itr) where V where K = new(Threads.SpinLock(), Dict{K, V}(itr))
+    ThreadSafeDict{K, V}() where V where K = new(Threads.SpinLock(), true, Dict{K, V}())
+    ThreadSafeDict{K, V}(itr) where V where K = new(Threads.SpinLock(), true, Dict{K, V}(itr))
 end
 ThreadSafeDict() = ThreadSafeDict{Any,Any}()
 
