@@ -20,6 +20,7 @@ mutable struct ThreadSafeDict{K, V} <: AbstractDict{K, V}
     ThreadSafeDict{K, V}(itr) where V where K = new(Threads.SpinLock(), true, Dict{K, V}(itr))
 end
 ThreadSafeDict() = ThreadSafeDict{Any,Any}()
+ThreadSafeDict(d::Dict) = ThreadSafeDict{typeof(d.keys[1]),typeof(d.vals[1])}(d)
 
 function EnableLock(dic::ThreadSafeDict)
     dic.enabled = true
